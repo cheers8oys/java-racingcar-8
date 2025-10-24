@@ -36,4 +36,11 @@ public class CarTest {
         assertEquals("car1", cars.get(0).getName());
         assertEquals("car2", cars.get(1).getName());
     }
+
+    @DisplayName("자동차들의 현재 위치 확인 테스트")
+    @Test
+    public void testCheckingCarPosition() {
+        assertEquals(0, cars.get(0).getPosition());
+        assertEquals(0, cars.get(1).getPosition());
+    }
 }
