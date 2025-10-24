@@ -17,4 +17,10 @@ public class Car {
     public int getPosition() {
         return position;
     }
+
+    public void moveForward(int randomNumber) {
+        if (randomNumber >= 4) {
+            position++;
+        }
+    }
 }

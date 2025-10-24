@@ -43,4 +43,20 @@ public class CarTest {
         assertEquals(0, cars.get(0).getPosition());
         assertEquals(0, cars.get(1).getPosition());
     }
+
+    @DisplayName("자동차 전진 기능 테스트")
+    @Test
+    public void testMoveForward() {
+        Car car = new Car("car3");
+        car.moveForward(4);
+        assertEquals(1, car.getPosition());
+    }
+
+    @DisplayName("자동차 전진 기능 실패 테스트")
+    @Test
+    public void testMoveForwardFailure() {
+        Car car = new Car("car4");
+        car.moveForward(3);
+        assertEquals(0, car.getPosition());
+    }
 }
