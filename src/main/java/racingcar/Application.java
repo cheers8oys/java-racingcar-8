@@ -17,7 +17,7 @@ public class Application {
 
         System.out.println("\n실행 결과");
         for (int i = 0; i < attemptCount; i++) {
-            cars.moveAllCarsRandomly(); // 각 자동차마다 개별 랜덤 숫자 생성
+            cars.moveAllCarsRandomly();
             outputView.printRoundResult(cars.getCars());
         }
 
