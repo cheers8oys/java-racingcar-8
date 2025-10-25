@@ -1,6 +1,7 @@
 package racingcar;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import racingcar.model.Car;
+import racingcar.model.Cars;
 import racingcar.view.InputView;
 
 public class CarTest {
@@ -58,5 +60,39 @@ public class CarTest {
         Car car = new Car("car4");
         car.moveForward(3);
         assertEquals(0, car.getPosition());
+    }
+
+    @DisplayName("한 명의 우승자 찾기 테스트")
+    @Test
+    public void testFindSingleWinner() {
+
+        Cars cars = new Cars(List.of("pobi", "woni", "jun"));
+        cars.getCars().get(0).moveForward(5); // pobi: position = 1
+        cars.getCars().get(0).moveForward(5); // pobi: position = 2
+        cars.getCars().get(1).moveForward(5); // woni: position = 1
+        cars.getCars().get(2).moveForward(3); // jun: position = 0
+
+        List<String> winners = cars.findWinners();
+
+        assertEquals(1, winners.size());
+        assertEquals("pobi", winners.get(0));
+    }
+
+    @DisplayName("공동 우승자 찾기 테스트")
+    @Test
+    public void testFindMultipleWinners() {
+
+        Cars cars = new Cars(List.of("pobi", "woni", "jun"));
+        cars.getCars().get(0).moveForward(5); // pobi: position = 1
+        cars.getCars().get(0).moveForward(5); // pobi: position = 2
+        cars.getCars().get(1).moveForward(5); // woni: position = 1
+        cars.getCars().get(1).moveForward(5); // woni: position = 2
+        cars.getCars().get(2).moveForward(3); // jun: position = 0
+
+        List<String> winners = cars.findWinners();
+
+        assertEquals(2, winners.size());
+        assertTrue(winners.contains("pobi"));
+        assertTrue(winners.contains("woni"));
     }
 }
