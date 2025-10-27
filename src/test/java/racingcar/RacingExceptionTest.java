@@ -4,9 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 import racingcar.utils.AttemptCountValidator;
@@ -36,28 +38,28 @@ public class RacingExceptionTest {
      * 리팩토링으로 인한 테스트 변경 필요
      */
 
-//    static Stream<List<String>> invalidCarName() {
-//        return Stream.of(
-//                null,                                   // 리스트 자체가 null
-//                List.of(),                              // 빈 리스트
-//                Arrays.asList("pobi", null),            // 중간에 null
-//                List.of(""),                            // 빈 문자열
-//                List.of("pobi", ""),                    // 중간에 빈 문자열
-//                List.of(" "),                           // 공백 문자열
-//                List.of("\t"),                          // 탭 문자
-//                List.of("\n"),                          // 개행 문자
-//                List.of("pobi", "   "),                 // 중간에 공백만
-//                Arrays.asList("", " ", null, "\t", "\n")// 여러 케이스 혼합
-//        );
-//    }
-//
-//    @DisplayName("자동차 이름이 null/빈/공백/탭/개행/빈문자 중 하나라도 있는 경우 예외 발생")
-//    @ParameterizedTest
-//    @MethodSource("invalidCarName")
-//    void testInvalidCarNames(List<String> carNames) {
-//        assertThrows(IllegalArgumentException.class,
-//                () -> CarNameValidator.validate(carNames));
-//    }
+    static Stream<String> invalidCarName() {
+        return Stream.of(
+                null,     // 리스트 자체가 null 이던 케이스의 null
+                // 빈 리스트는 개별 String 요소가 없으므로 생략
+                "pobi", null,             // Arrays.asList("pobi", null)
+                "",                       // List.of("")
+                "pobi", "",               // List.of("pobi", "")
+                " ",                      // List.of(" ")
+                "\t",                     // List.of("\t")
+                "\n",                     // List.of("\n")
+                "pobi", "   ",            // List.of("pobi", "   ")
+                "", " ", null, "\t", "\n" // Arrays.asList("", " ", null, "\t", "\n")
+        );
+    }
+
+    @DisplayName("자동차 이름이 null/빈/공백/탭/개행/빈문자 중 하나라도 있는 경우 예외 발생")
+    @ParameterizedTest
+    @MethodSource("invalidCarName")
+    void testInvalidCarNames(String carNames) {
+        assertThrows(IllegalArgumentException.class,
+                () -> CarNameValidator.validate(carNames));
+    }
 
     @ParameterizedTest
     @NullAndEmptySource

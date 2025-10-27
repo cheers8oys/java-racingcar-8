@@ -31,6 +31,9 @@ public class CarNameValidator {
     }
 
     public static List<String> parseAndValidate(String inputValue) {
+        if (inputValue == null) {
+            return List.of();
+        }
         List<String> carNames = Arrays.stream(inputValue.split(","))
                 .map(String::trim)
                 .collect(Collectors.toList());
