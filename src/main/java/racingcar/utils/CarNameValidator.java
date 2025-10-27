@@ -9,13 +9,25 @@ import java.util.stream.Collectors;
 public class CarNameValidator {
 
     private static final int MAX_NAME_LENGTH = 5;
+    private static final int MIN_CAR_COUNT = 2;
+    private static final int MAX_CAR_COUNT = 30;
 
-    public static List<String> validate(String intputValue) {
-        List<String> names = parseAndValidate(intputValue);
+    public static List<String> validate(String inputValue) {
+        List<String> names = parseAndValidate(inputValue);
         validateNotEmpty(names);
         validateLength(names);
         validateDuplicates(names);
+        validateCount(names);  // 추가한 부분
         return names;
+    }
+
+    private static void validateCount(List<String> names) {
+        if (names.size() < MIN_CAR_COUNT) {
+            throw new IllegalArgumentException("자동차는 최소 2대 이상이어야 합니다.");
+        }
+        if (names.size() > MAX_CAR_COUNT) {
+            throw new IllegalArgumentException("자동차는 최대 30대까지 가능합니다.");
+        }
     }
 
     public static List<String> parseAndValidate(String inputValue) {

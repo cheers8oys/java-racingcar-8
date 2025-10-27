@@ -1,6 +1,7 @@
 package racingcar;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -8,10 +9,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import racingcar.model.Car;
 import racingcar.model.Cars;
+import racingcar.utils.CarNameValidator;
 
 public class CarTest {
-
-    private List<Car> cars;
 
     @DisplayName("입력받은 자동차 등록 테스트")
     @Test
@@ -19,6 +19,14 @@ public class CarTest {
         Cars cars = new Cars(List.of("car1", "car2"));
         assertEquals("car1", cars.getCars().get(0).getName());
         assertEquals("car2", cars.getCars().get(1).getName());
+    }
+
+    @DisplayName("최소 두 대 이상 자동차 입력 테스트")
+    @Test
+    public void testMinimumCarRegistration() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Cars(CarNameValidator.validate("car1"));
+        });
     }
 
     @DisplayName("자동차들의 현재 위치 확인 테스트")
