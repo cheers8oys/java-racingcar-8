@@ -2,7 +2,6 @@ package racingcar.view;
 
 import java.util.List;
 import racingcar.model.Car;
-import racingcar.model.Cars;
 
 public class OutputView {
 
@@ -14,9 +13,7 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printWinners(List<String> carNames) {
-        Cars cars = new Cars(carNames);
-        List<String> winners = cars.findWinners();
+    public void printWinners(List<String> winners) {
         System.out.println("최종 우승자 : " + String.join(", ", winners));
     }
 }
