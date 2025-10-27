@@ -15,10 +15,9 @@ public class InputView {
                 .collect(Collectors.toList());
     }
 
-    public int readAttemptCount() {
+    public String readAttemptCount() {
         System.out.println("시도할 횟수는 몇 회인가요?");
-        int attemptCount = Integer.parseInt(Console.readLine());
-        return attemptCount;
+        return Console.readLine();
     }
 }
 

@@ -1,5 +1,7 @@
 package racingcar;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
@@ -9,6 +11,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
+import racingcar.utils.AttemptCountValidator;
 import racingcar.utils.CarNameValidator;
 
 public class RacingExceptionTest {
@@ -52,6 +57,44 @@ public class RacingExceptionTest {
     void testInvalidCarNames(List<String> carNames) {
         assertThrows(IllegalArgumentException.class,
                 () -> CarNameValidator.validate(carNames));
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = {" ", "\t", "\n"})
+    @DisplayName("입력값이 null, 빈문자열, 공백일 경우 IllegalArgumentException 발생")
+    void testNullOrBlankInput(String inputValue) {
+        assertThrows(IllegalArgumentException.class, () -> {
+            AttemptCountValidator.validate(inputValue);
+        });
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"abc", "1a", "!@#", "가나다"})
+    @DisplayName("숫자가 아닌 문자열 입력 시 IllegalArgumentException 발생")
+    void testNonNumericInput(String inputValue) {
+        assertThrows(IllegalArgumentException.class, () -> {
+            AttemptCountValidator.validate(inputValue);
+        });
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"0", "-1", "-100"})
+    @DisplayName("0 또는 음수 입력 시 IllegalArgumentException 발생")
+    void testNonPositiveNumbers(String inputValue) {
+        assertThrows(IllegalArgumentException.class, () -> {
+            AttemptCountValidator.validate(inputValue);
+        });
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"1", "10", "100"})
+    @DisplayName("유효한 양수 입력 시 예외가 발생하지 않고 정상 처리됨")
+    void testValidInput(String input) {
+        assertDoesNotThrow(() -> {
+            int result = AttemptCountValidator.validate(input);
+            assertEquals(Integer.parseInt(input), result);
+        });
     }
 
 }

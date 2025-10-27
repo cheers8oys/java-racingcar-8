@@ -2,6 +2,7 @@ package racingcar.controller;
 
 import java.util.List;
 import racingcar.model.Cars;
+import racingcar.utils.AttemptCountValidator;
 import racingcar.view.InputView;
 import racingcar.view.OutputView;
 
@@ -17,7 +18,7 @@ public class RacingController {
 
     public void run() {
         List<String> carNames = inputView.readCarNames();
-        int attemptCount = inputView.readAttemptCount();
+        int attemptCount = AttemptCountValidator.validate(inputView.readAttemptCount());
         Cars cars = new Cars(carNames);
 
         System.out.println("\n실행 결과");
