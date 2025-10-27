@@ -18,12 +18,15 @@ public class RacingController {
     }
 
     public void run() {
-        List<String> carNames = CarNameValidator.validate(inputView.readCarNames());
-        int attemptCount = AttemptCountValidator.validate(inputView.readAttemptCount());
-        Cars cars = new Cars(carNames);
+
+        String carNames = inputView.readCarNames();
+        String attemptCount = inputView.readAttemptCount();
+        List<String> parsedCarNames = CarNameValidator.validate(carNames);
+        int parsedAttemptCount = AttemptCountValidator.validate(attemptCount);
+        Cars cars = new Cars(parsedCarNames);
 
         System.out.println("\n실행 결과");
-        playRacing(cars, attemptCount);
+        playRacing(cars, parsedAttemptCount);
         displayWinners(cars);
     }
 
