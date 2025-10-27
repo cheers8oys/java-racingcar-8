@@ -79,9 +79,9 @@ public class RacingExceptionTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"0", "-1", "-100"})
-    @DisplayName("0 또는 음수 입력 시 IllegalArgumentException 발생")
-    void testNonPositiveNumbers(String inputValue) {
+    @ValueSource(strings = {"0", "-1", "101"})
+    @DisplayName("0 또는 음수, 100회 초과 입력 시 IllegalArgumentException 발생")
+    void testInValidNumberRange(String inputValue) {
         assertThrows(IllegalArgumentException.class, () -> {
             AttemptCountValidator.validate(inputValue);
         });
@@ -89,8 +89,8 @@ public class RacingExceptionTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"1", "10", "100"})
-    @DisplayName("유효한 양수 입력 시 예외가 발생하지 않고 정상 처리됨")
-    void testValidInput(String input) {
+    @DisplayName("유효한 양수 범위 입력 시 예외가 발생하지 않고 정상 처리됨")
+    void testValidNumberRange(String input) {
         assertDoesNotThrow(() -> {
             int result = AttemptCountValidator.validate(input);
             assertEquals(Integer.parseInt(input), result);

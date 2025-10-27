@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import racingcar.model.Car;
@@ -21,11 +23,24 @@ public class CarTest {
         assertEquals("car2", cars.getCars().get(1).getName());
     }
 
-    @DisplayName("최소 두 대 이상 자동차 입력 테스트")
+
+    @DisplayName("두 대 미만 자동차 입력 테스트")
     @Test
     public void testMinimumCarRegistration() {
         assertThrows(IllegalArgumentException.class, () -> {
             new Cars(CarNameValidator.validate("car1"));
+        });
+    }
+
+    @DisplayName("30대 초과 자동차 입력 테스트")
+    @Test
+    public void testMaximumCarRegistration() {
+        List<String> carNames = IntStream.rangeClosed(1, 31)
+                .mapToObj(i -> "car" + i)
+                .collect(Collectors.toList());
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Cars(CarNameValidator.validate(String.join(", ", carNames)));
         });
     }
 

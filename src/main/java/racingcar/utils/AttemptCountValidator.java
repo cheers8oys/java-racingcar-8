@@ -2,10 +2,12 @@ package racingcar.utils;
 
 public class AttemptCountValidator {
 
+    private static final int MAX_ATTEMPT_COUNT = 100;
+
     public static int validate(String inputValue) {
         validateNotNullAndBlank(inputValue);
         int attemptCount = parseIntegerAttemptCount(inputValue);
-        validatePositiveNumber(attemptCount);
+        validateNumberRange(attemptCount);
         return attemptCount;
     }
 
@@ -23,9 +25,12 @@ public class AttemptCountValidator {
         }
     }
 
-    private static void validatePositiveNumber(int attemptCount) {
+    private static void validateNumberRange(int attemptCount) {
         if (attemptCount <= 0) {
             throw new IllegalArgumentException("시도 횟수는 1 이상의 정수여야 합니다.");
+        }
+        if (attemptCount > MAX_ATTEMPT_COUNT) {
+            throw new IllegalArgumentException("시도 횟수는 100회 이하로 제한됩니다.");
         }
     }
 }
