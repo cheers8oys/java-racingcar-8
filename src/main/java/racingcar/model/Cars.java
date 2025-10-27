@@ -40,4 +40,11 @@ public class Cars {
                 .max()
                 .orElse(0);
     }
+
+    public void checkAllCarsStationary() {
+        boolean anyMoved = cars.stream().anyMatch(car -> car.getPosition() > 0);
+        if (!anyMoved) {
+            throw new IllegalStateException("모든 자동차가 출발하지 않았습니다. 전원 실격 처리됩니다.");
+        }
+    }
 }

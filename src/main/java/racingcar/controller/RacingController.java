@@ -35,6 +35,7 @@ public class RacingController {
             cars.moveAllCarsRandomly();
             outputView.printRoundResult(cars.getCars());
         }
+        cars.checkAllCarsStationary();
     }
 
     private void displayWinners(Cars cars) {
