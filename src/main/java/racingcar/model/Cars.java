@@ -3,12 +3,14 @@ package racingcar.model;
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.List;
 import java.util.stream.Collectors;
+import racingcar.utils.CarNameValidator;
 
 public class Cars {
 
     private final List<Car> cars;
 
     public Cars(List<String> carNames) {
+        CarNameValidator.validate(carNames);
         this.cars = carNames.stream()
                 .map(Car::new)
                 .collect(Collectors.toList());

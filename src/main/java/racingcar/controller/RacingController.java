@@ -16,7 +16,6 @@ public class RacingController {
     }
 
     public void run() {
-
         List<String> carNames = inputView.readCarNames();
         int attemptCount = inputView.readAttemptCount();
         Cars cars = new Cars(carNames);
